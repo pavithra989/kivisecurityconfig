@@ -1,16 +1,18 @@
 package com.pm.security.controller;
 
 import com.pm.security.model.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.pm.security.model.Users;
+import com.pm.security.service.UserRegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class StudentController {
+    @Autowired
+    private UserRegisterService userRegisterService;
 
     private List<Student> students = new ArrayList<>(List.of(new Student(1,"pavi",80),new Student(2,"kavi",90)));
 
@@ -29,6 +31,11 @@ public class StudentController {
         students.add(student);
         return student;
     }
-
+    @PostMapping("/register")
+    public String registerUser(@RequestBody Users users)
+    {
+        userRegisterService.registeruser(users);
+        return "user registered succesfully";
+    }
 
 }
